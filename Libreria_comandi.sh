@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# IMPORTANTE
+# IMPORTANT
 # Se stai leggendo questo messaggio
 # e non hai aperto volontariamente il programma con un editor di testo
 # devi uscire; quindi premere con il tasto destro del mouse sopra al file,
@@ -12,7 +12,7 @@
 ####RICONOSCIMENTI#######################################
 #########################################################
 
-ver=0.6.1
+ver=0.6.2
 riconoscimenti="Libreria comandi By Mac89				          v$ver"
 
 #########################################################
@@ -25,6 +25,10 @@ GREEN="\e[0;32m"
 BLUE="\e[0;34m"
 YELLOW="\e[1;33m"
 Z="\e[0m"
+
+##SORGENTE##
+link="https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Libreria_comandi.sh"
+############
 
 function cancel()
 {
@@ -78,6 +82,74 @@ function check_prog_auto()
 	fi
 }
 
+function Update_lib()
+{
+	#cd /home/$USER
+	#mkdir /home/$USER/.temp
+	cd /home/$USER/.temp
+	#wget $link
+	chmod +x Libreria_comandi.sh
+	echo -e "$GREEN Consentire la sovrascrittura per aggiornare $Z"
+	cp -i Libreria_comandi.sh /home/$USER
+	#rm -f /home/$USER/.temp/Libreria_comandi.sh
+	#rmdir /home/$USER/.temp
+	cd /home/$USER
+	#'/home/$USER/Libreria_comandi.sh'
+}
+
+function Controlla_aggiornamenti()
+{
+	cd /home/$USER
+	mkdir .temp
+	cd /home/$USER/.temp
+	wget $link
+	cd
+	md5=$( md5sum /home/$USER/Libreria_comandi.sh | awk '{print $1}' )
+	md5_1=$( md5sum /home/$USER/.temp/Libreria_comandi.sh | awk '{print $1}' )
+	if [ $md5 == $md5_1 ]; then
+		echo -e "$GREEN Hai già l'ultima versione $Z"
+		rm -f /home/$USER/.temp/Libreria_comandi.sh
+		rmdir /home/$USER/.temp
+		echo "Ritorno alla schermata iniziale tra 7 Sec"
+		sleep 7	
+	else
+		echo -e "$RED Aggiornamento disponibile $Z"
+		echo -e "$GREEN Versione attuale $Z"
+		sed -n '15p' /home/$USER/Libreria_comandi.sh
+		echo -e "$GREEN Versione disponibile $Z" 
+		sed -n '15p' /home/$USER/.temp/Libreria_comandi.sh
+		sel="S"
+		read -p "Proseguire con l'aggiornamento [S\n] " sel
+			if [[ $sel = @(n|N) ]]; then
+				echo -e "$RED Aggiornamento NON ESEGUITO $Z"
+				rm -f /home/$USER/.temp/Libreria_comandi.sh
+				rmdir /home/$USER/.temp
+				echo "Ritorno alla schermata iniziale tra 3 Sec"
+				sleep 3
+			elif [[ $sel = @(s|S) ]]; then
+				echo -e "$GREEN Aggiornamento in corso... $Z"
+				Update_lib
+				md5=$( md5sum /home/$USER/Libreria_comandi.sh | awk '{print $1}' )
+				md5_1=$( md5sum /home/$USER/.temp/Libreria_comandi.sh | awk '{print $1}' )
+				if [ $md5 == $md5_1 ]; then
+					echo -e "$GREEN Aggiornamento completato... $Z"
+					echo -e "$RED Riavviare lo script per completare l'aggiornamento $Z"
+					rm -f /home/$USER/.temp/Libreria_comandi.sh
+					rmdir /home/$USER/.temp
+					echo "Ritorno alla schermata iniziale tra 3 Sec"
+					sleep 3
+				else
+					echo -e "$RED Aggiornamento non riuscito $Z"
+					echo "Ritorno alla schermata iniziale tra 3 Sec"
+					sleep 3
+				fi
+			else
+				Controlla_aggiornamenti
+			fi
+				sel=""
+	fi
+	returne
+}
 #########################################################
 ####FUNZIONI#############################################
 #########################################################
@@ -744,6 +816,7 @@ function inizio()
 {
 
 	declare -a options
+	options[${#options[*]}]="Controlla aggiornamento script";
 	options[${#options[*]}]="Installare software";
 	options[${#options[*]}]="Manutenzione distribuzione";
 	options[${#options[*]}]="Esegui programmi";
@@ -753,11 +826,12 @@ function inizio()
 	select opt in "${options[@]}"; do
 	case ${opt} in
 	
-	${options[0]}) install;;
-	${options[1]}) manutenzione;;
-	${options[2]}) run_external_program;;
-	${options[3]}) comandi_utili;;
-	${options[4]}) check_programm;;
+	${options[0]}) Controlla_aggiornamenti;;
+	${options[1]}) install;;
+	${options[2]}) manutenzione;;
+	${options[3]}) run_external_program;;
+	${options[4]}) comandi_utili;;
+	${options[5]}) check_programm;;
 	
 	(Esci) break; ;;
 	esac;
