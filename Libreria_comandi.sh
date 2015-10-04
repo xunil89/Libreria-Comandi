@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# IMPORTANT
+# IMPORTANTE
 # Se stai leggendo questo messaggio
 # e non hai aperto volontariamente il programma con un editor di testo
 # devi uscire; quindi premere con il tasto destro del mouse sopra al file,
