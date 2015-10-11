@@ -12,7 +12,7 @@
 ####RICONOSCIMENTI#######################################
 #########################################################
 
-ver=0.6.2
+ver=0.6.4
 riconoscimenti="Libreria comandi By Mac89				          v$ver"
 
 #########################################################
@@ -29,6 +29,12 @@ Z="\e[0m"
 ##SORGENTE##
 link="https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Libreria_comandi.sh"
 ############
+
+##CARTELLE PROGRAMMA##
+cd /home/$USER
+mkdir .Libreria_comandi
+cd
+master_dir="/home/$USER/.Libreria_comandi"
 
 function cancel()
 {
@@ -662,6 +668,15 @@ function root_manager()
 	fi
 }
 
+function Update_Mirror()
+{
+	cd $master_dir
+	wget https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Mirrorlist.sh
+	chmod +x Mirrorlist.sh
+	"$master_dir/Mirrorlist.sh"
+	returne
+}
+
 #########################################################
 ####SOTTO CATEGORIE######################################
 #########################################################
@@ -777,6 +792,7 @@ function comandi_utili()
 	options[${#options[*]}]="Backup/Ripristino pacchetti";
 	options[${#options[*]}]="Aggiungi/Rimuovi pachetti a IgnorePkg";
 	options[${#options[*]}]="Accelera download pacman";
+	options[${#options[*]}]="Aggiorna Mirror";
 	options[${#options[*]}]="Esci";
 	select opt in "${options[@]}"; do
 	case ${opt} in
@@ -785,7 +801,8 @@ function comandi_utili()
 	${options[1]}) backup_soft;;
 	${options[2]}) IgnorePkg;;
 	${options[3]}) SpeedRunPacman;;
-	${options[4]}) returne;;
+	${options[4]}) Update_Mirror;;
+	${options[5]}) returne;;
 
 	esac;
 	done
