@@ -12,7 +12,7 @@
 ####RICONOSCIMENTI#######################################
 #########################################################
 
-ver=0.6.4
+ver=0.6.5
 riconoscimenti="Libreria comandi By Mac89				          v$ver"
 
 #########################################################
@@ -31,10 +31,11 @@ link="https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Libreria
 ############
 
 ##CARTELLE PROGRAMMA##
-cd /home/$USER
-mkdir .Libreria_comandi
-cd
-master_dir="/home/$USER/.Libreria_comandi"
+master_dir="/usr/share/libreria_comandi"
+log_dir="/var/log/libreria_comandi"
+temp_dir="/home/$USER/.temp"
+log_dir="/var/log"
+bin_dir="/usr/bin"
 
 function cancel()
 {
@@ -88,72 +89,9 @@ function check_prog_auto()
 	fi
 }
 
-function Update_lib()
-{
-	#cd /home/$USER
-	#mkdir /home/$USER/.temp
-	cd /home/$USER/.temp
-	#wget $link
-	chmod +x Libreria_comandi.sh
-	echo -e "$GREEN Consentire la sovrascrittura per aggiornare $Z"
-	cp -i Libreria_comandi.sh /home/$USER
-	#rm -f /home/$USER/.temp/Libreria_comandi.sh
-	#rmdir /home/$USER/.temp
-	cd /home/$USER
-	#'/home/$USER/Libreria_comandi.sh'
-}
-
 function Controlla_aggiornamenti()
 {
-	cd /home/$USER
-	mkdir .temp
-	cd /home/$USER/.temp
-	wget $link
-	cd
-	md5=$( md5sum /home/$USER/Libreria_comandi.sh | awk '{print $1}' )
-	md5_1=$( md5sum /home/$USER/.temp/Libreria_comandi.sh | awk '{print $1}' )
-	if [ $md5 == $md5_1 ]; then
-		echo -e "$GREEN Hai già l'ultima versione $Z"
-		rm -f /home/$USER/.temp/Libreria_comandi.sh
-		rmdir /home/$USER/.temp
-		echo "Ritorno alla schermata iniziale tra 7 Sec"
-		sleep 7	
-	else
-		echo -e "$RED Aggiornamento disponibile $Z"
-		echo -e "$GREEN Versione attuale $Z"
-		sed -n '15p' /home/$USER/Libreria_comandi.sh
-		echo -e "$GREEN Versione disponibile $Z" 
-		sed -n '15p' /home/$USER/.temp/Libreria_comandi.sh
-		sel="S"
-		read -p "Proseguire con l'aggiornamento [S\n] " sel
-			if [[ $sel = @(n|N) ]]; then
-				echo -e "$RED Aggiornamento NON ESEGUITO $Z"
-				rm -f /home/$USER/.temp/Libreria_comandi.sh
-				rmdir /home/$USER/.temp
-				echo "Ritorno alla schermata iniziale tra 3 Sec"
-				sleep 3
-			elif [[ $sel = @(s|S) ]]; then
-				echo -e "$GREEN Aggiornamento in corso... $Z"
-				Update_lib
-				md5=$( md5sum /home/$USER/Libreria_comandi.sh | awk '{print $1}' )
-				md5_1=$( md5sum /home/$USER/.temp/Libreria_comandi.sh | awk '{print $1}' )
-				if [ $md5 == $md5_1 ]; then
-					echo -e "$GREEN Aggiornamento completato... $Z"
-					echo -e "$RED Riavviare lo script per completare l'aggiornamento $Z"
-					rm -f /home/$USER/.temp/Libreria_comandi.sh
-					rmdir /home/$USER/.temp
-					echo "Ritorno alla schermata iniziale tra 3 Sec"
-					sleep 3
-				else
-					echo -e "$RED Aggiornamento non riuscito $Z"
-					echo "Ritorno alla schermata iniziale tra 3 Sec"
-					sleep 3
-				fi
-			else
-				Controlla_aggiornamenti
-			fi
-				sel=""
-	fi
+	"$master_dir/Update_lib.sh"
 	returne
 }
 #########################################################
@@ -372,6 +310,12 @@ function backup_soft_sal()
 	cd
 }
 
+function install_ya()
+{
+	"$master_dir/Yaourt_install.sh"
+	returne
+}
+
 function install_program()
 {
 	total=$(($yaourt+$bleachbit+$paccache+$sudo+$axel))
@@ -404,14 +348,7 @@ function install_program()
 		if [[ $yaourt == 0 ]]; then
 			read -p "Vuoi installare Yaourt [S\n] " sel
 			if [[ $sel = @(s|S) ]]; then
-				su -c'
-				echo "" >> /etc/pacman.conf
-				echo "#Yaourt"  >> /etc/pacman.conf
-				echo "[archlinuxfr]"  >> /etc/pacman.conf
-				echo "SigLevel = Optional TrustAll"  >> /etc/pacman.conf
-				echo "Server = http://repo.archlinux.fr/\$arch" >> /etc/pacman.conf
-				'
-				sudo pacman -S yaourt
+				install_ya
 			else
 				echo -e "$RED Yaourt non verrà installato $Z"
 			fi
@@ -670,9 +607,6 @@ function root_manager()
 
 function Update_Mirror()
 {
-	cd $master_dir
-	wget https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Mirrorlist.sh
-	chmod +x Mirrorlist.sh
 	"$master_dir/Mirrorlist.sh"
 	returne
 }
