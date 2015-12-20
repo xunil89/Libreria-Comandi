@@ -78,7 +78,7 @@ function Controlla_aggiornamenti()
 			fi
 				sel=""
 	fi
-	rm -rf /home/$USER/.temp
+	
 	exit
 }
 
