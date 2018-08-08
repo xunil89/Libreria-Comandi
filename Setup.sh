@@ -19,7 +19,7 @@ sudo wget https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Upda
 sudo wget https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Libreria_comandi.sh
 sudo chmod +x  Libreria_comandi.sh
 sudo chmod +x Mirrorlist.sh
-sudo chmod +x Yaourt_install.sh
+sudo chmod +x Aurman_install.sh
 sudo chmod +x Update_lib.sh
 cd
 
@@ -30,7 +30,7 @@ cd
 #cd /usr/bin
 #cd
 
-cd /home/$USER/Scrivania
+cd /home/$USER
 wget https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Libreria-comandi.desktop
 cd
 
