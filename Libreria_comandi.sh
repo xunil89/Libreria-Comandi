@@ -338,7 +338,6 @@ function backup_soft_sal()
 function install_aurman_script()
 {
 	cd 
-	chmod +x Aurman_install.sh
 	"$master_dir/Aurman_install.sh"
 	returne
 }
