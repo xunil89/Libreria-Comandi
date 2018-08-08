@@ -12,7 +12,7 @@
 ####RICONOSCIMENTI#######################################
 #########################################################
 
-ver=0.6.5
+ver=0.6.6
 riconoscimenti="Libreria comandi By Mac89				          v$ver"
 
 #########################################################
@@ -81,11 +81,18 @@ function check_prog_auto()
 		axel=0
 	fi
 
-	if which yaourt &>/dev/null; then
+	if which aurman &>/dev/null; then
 		prog=$(($prog+1))
-		yaourt=1
+		aurman=1
 	else
-		yaourt=0
+		aurman=0
+	fi
+	
+		if which wget &>/dev/null; then
+		prog=$(($prog+1))
+		wget=1
+	else
+		wget=0
 	fi
 }
 
@@ -149,15 +156,27 @@ function bleachbit_c()
 	fi
 }
 
-function yaourt_c()
+function aurman_c()
 {
-	if which yaourt &>/dev/null; then
+	if which aurman &>/dev/null; then
 		prog=$(($prog+1))
-		yaourt=1
-		echo -e "Yaourt............................[$GREEN OK $Z]"
+		aurman=1
+		echo -e "Aurman............................[$GREEN OK $Z]"
 	else
-		yaourt=0
-		echo -e "Yaourt..........................[$RED FAIL $Z]"
+		aurman=0
+		echo -e "Aurman..........................[$RED FAIL $Z]"
+	fi
+}
+
+function wget_c()
+{
+	if which wget &>/dev/null; then
+		prog=$(($prog+1))
+		wget=1
+		echo -e "Wget............................[$GREEN OK $Z]"
+	else
+		wget=0
+		echo -e "Wget..........................[$RED FAIL $Z]"
 	fi
 }
 
@@ -310,26 +329,29 @@ function backup_soft_sal()
 	cd
 }
 
-function install_ya()
+function install_aurman_script()
 {
-	"$master_dir/Yaourt_install.sh"
+	cd 
+	chmod +x Aurman_install.sh
+	"$master_dir/Aurman_install.sh"
 	returne
 }
 
 function install_program()
 {
-	total=$(($yaourt+$bleachbit+$paccache+$sudo+$axel))
+	total=$(($aurman+$bleachbit+$paccache+$sudo+$axel+$wget))
 	read -p "Vuoi installare tutti i programmi mancanti [S\n] " sel
 	if [[ $sel = @(s|S) ]]; then
-		if [[ $yaourt == 0 ]]; then
-			su -c'
-			echo "" >> /etc/pacman.conf
-			echo "#Yaourt"  >> /etc/pacman.conf
-			echo "[archlinuxfr]" >> /etc/pacman.conf
-			echo "SigLevel = Optional TrustAll"  >> /etc/pacman.conf
-			echo "Server = http://repo.archlinux.fr/\$arch" >> /etc/pacman.conf
-			'
-			sudo pacman -S yaourt
+		if [[ $aurman == 0 ]]; then
+			echo "funzione non attiva"
+			#su -c'
+			#echo "" >> /etc/pacman.conf
+			#echo "#Aurman"  >> /etc/pacman.conf
+			#echo "[archlinuxfr]" >> /etc/pacman.conf
+			#echo "SigLevel = Optional TrustAll"  >> /etc/pacman.conf
+			#echo "Server = http://repo.archlinux.fr/\$arch" >> /etc/pacman.conf
+			#'
+			#sudo pacman -S Aurman
 		fi
 		if [[ $bleachbit == 0 ]]; then
 			sudo pacman -S bleachbit
@@ -343,14 +365,17 @@ function install_program()
 		if [[ $axel == 0 ]]; then
 			sudo pacman -S axel
 		fi
+		if [[ $wget == 0 ]]; then
+			sudo pacman -S wget
+		fi
 		
 	elif [[ $sel = @(n|N) ]]; then
-		if [[ $yaourt == 0 ]]; then
-			read -p "Vuoi installare Yaourt [S\n] " sel
+		if [[ $aurman == 0 ]]; then
+			read -p "Vuoi installare Aurman [S\n] " sel
 			if [[ $sel = @(s|S) ]]; then
-				install_ya
+				install_aurman
 			else
-				echo -e "$RED Yaourt non verrà installato $Z"
+				echo -e "$RED Aurman non verrà installato $Z"
 			fi
 		fi
 		if [[ $bleachbit == 0 ]]; then
@@ -385,6 +410,14 @@ function install_program()
 				echo -e "$RED Axel non verrà installato $Z"
 			fi
 		fi
+		if [[ $wget == 0 ]]; then
+			read -p "Vuoi installare Wget[S\n] " sel
+			if [[ $sel = @(s|S) ]]; then
+				sudo pacman -S wget
+			else
+				echo -e "$RED Wget non verrà installato $Z"
+			fi
+		fi
 	fi
 }
 
@@ -407,31 +440,31 @@ function install_pacman()
 	returne
 }
 
-function install_yaourt()
+function install_aurman()
 {
-	yaourt_c
-	if [ $yaourt == 1 ]; then
+	aurman_c
+	if [ $aurman == 1 ]; then
 		read -p "Digita il nome dell'applicazione da installare " software
-		yaourt $software
+		aurman -S $software
 		software=""
 		returne
 	else
-		echo -e "$BLUE Mi dispiace il software Yaourt non è installato $Z"
+		echo -e "$BLUE Mi dispiace il software Aurman non è installato $Z"
 		echo "Ritorno alla schermata iniziale tra 7 Sec"
 		sleep 7
 		returne
 	fi
 }
 
-function agg_yaourt()
+function agg_aurman()
 {
-	yaourt_c
-	if [ $yaourt == 1 ]; then
-		echo "Aggiornamento S.O. con yaourt..."
-		sudo yaourt -Syua
+	aurman_c
+	if [ $aurman == 1 ]; then
+		echo "Aggiornamento S.O. con Aurman..."
+		sudo aurman -Syu
 		returne
 	else
-		echo -e "$BLUE Mi dispiace il software Yaourt non è installato $Z"
+		echo -e "$BLUE Mi dispiace il software Aurman non è installato $Z"
 		echo "Ritorno alla schermata iniziale tra 7 Sec"
 		sleep 7
 		returne
@@ -467,6 +500,13 @@ function cache_del_paccache()
 		sleep 7
 		returne
 	fi
+}
+
+function cache_aurman_del()
+{
+	echo "Rimozione cache pacman/aurman..."
+	aurman -Sc
+	returne
 }
 
 function cache_del()
@@ -622,13 +662,13 @@ function install()
 	declare -a options
 
 	options[${#options[*]}]="Installare software con Pacman";
-	options[${#options[*]}]="Installare software con Yaourt";
+	options[${#options[*]}]="Installare software con Aurman";
 	options[${#options[*]}]="Esci";
 	select opt in "${options[@]}"; do
 	case ${opt} in
 
 	${options[0]}) install_pacman;;
-	${options[1]}) install_yaourt;;
+	${options[1]}) install_aurman;;
 	${options[2]}) returne;;
 	
 	esac;
@@ -642,11 +682,12 @@ function manutenzione()
 	declare -a options
 	
 	options[${#options[*]}]="Aggiornare il S.O. (pacman)";
-	options[${#options[*]}]="Aggiornare il S.O. (yaourt)";
+	options[${#options[*]}]="Aggiornare il S.O. (Aurman)";
 	options[${#options[*]}]="Ottimizzare database pacman";
 	options[${#options[*]}]="Rimuove cache pacchetti (mantiene solo la penultima versione (Paccache))";
 	options[${#options[*]}]="Rimuove cache pacchetti scaricati ed attualmente non installati";
 	options[${#options[*]}]="Rimuove cache pacchetti (Sconsigliata)";
+	options[${#options[*]}]="Rimuove cache Aurman/Pacman";
 	options[${#options[*]}]="Rimuovere pacchetti orfani";
 	options[${#options[*]}]="Rimuovere Software con tutte le sue dipendenze";
 	options[${#options[*]}]="Rimuovere Software";
@@ -657,16 +698,17 @@ function manutenzione()
 
 	
 	${options[0]}) agg_pacman;;
-	${options[1]}) agg_yaourt;;
+	${options[1]}) agg_aurman;;
 	${options[2]}) pacman_ott;;
 	${options[3]}) cache_del_paccache;;
 	${options[4]}) cache_del;;
 	${options[5]}) cache_del_full;;
-	${options[6]}) remove_orfan;;
-	${options[7]}) remove_soft_full;;
-	${options[8]}) remove_soft;;
-	${options[9]}) rapid_cleen;;
-	${options[10]}) returne;;
+	${options[6]}) cache_aurman_del;;
+	${options[7]}) remove_orfan;;
+	${options[8]}) remove_soft_full;;
+	${options[9]}) remove_soft;;
+	${options[10]}) rapid_cleen;;
+	${options[11]}) returne;;
 	
 	esac;
 	done
@@ -680,9 +722,9 @@ function check_programm()
 	sudo_c
 	paccache_c
 	bleachbit_c
-	yaourt_c
+	aurman_c
 	axel_c
-	if [ $prog == 5 ]; then
+	if [ $prog == 6 ]; then
 		echo -e "$GREEN Tutti i programmi supplementari sono presenti $Z"
 		echo "Attenti..."
 		sleep 7
@@ -797,7 +839,7 @@ echo "
 #########################################################
 #			ATTENZIONE!!!!!			#
 #	   Questo script ha bisogno di software		#
-#      supplemetari (Yaourt,Paccache,Bleachbit)		#
+#      supplemetari (Aurman,Paccache,Bleachbit)		#
 #	 per eseguire tutte le sue funzionalità.	#
 #	   SCEGLIEDO DI UTILIZZARE QUESTO SCRIPT	#
 #    ESULI IL SUO WRITER DA QUALSIASI RESPONSABILITÀ	#
