@@ -102,7 +102,7 @@ function Controlla_aggiornamenti()
 	returne
 }
 
-function Remove_lib()
+function remove_lib()
 {
 	"$master_dir/Remove_lib.sh"
 	returne
