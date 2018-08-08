@@ -831,8 +831,8 @@ function inizio()
 	${options[2]}) manutenzione;;
 	${options[3]}) run_external_program;;
 	${options[4]}) comandi_utili;;
-	${options[5]}) remove_lib;;
-	${options[6]}) check_programm;;
+	${options[5]}) check_programm;;
+	${options[6]}) remove_lib;;
 	
 	(Esci) break; ;;
 	esac;
