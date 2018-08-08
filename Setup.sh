@@ -32,4 +32,6 @@ cd /home/$USER
 wget https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Libreria-comandi.desktop
 sudo chmod +x Libreria-comandi.desktop
 cd
+echo "DIRIGITI NELLA TUA HOME LI TROVERAI IL PROGRAMMA ;)"
+sleep 10
 exit
