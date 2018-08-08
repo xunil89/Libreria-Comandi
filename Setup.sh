@@ -19,8 +19,6 @@ sudo wget https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Upda
 sudo wget https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Libreria_comandi.sh
 sudo wget https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Remove_lib.sh
 sudo chmod +x /usr/share/libreria_comandi/*
-cd /home/$USER
-sudo chmod +x Libreria-comandi.desktop
 cd
 
 #cd /usr/share/libreria_comandi/ico
@@ -32,6 +30,6 @@ cd
 
 cd /home/$USER
 wget https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Libreria-comandi.desktop
+sudo chmod +x Libreria-comandi.desktop
 cd
-
 exit
