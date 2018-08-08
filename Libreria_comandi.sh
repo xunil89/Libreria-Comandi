@@ -101,6 +101,12 @@ function Controlla_aggiornamenti()
 	"$master_dir/Update_lib.sh"
 	returne
 }
+
+function Remove_lib()
+{
+	"$master_dir/Remove_lib.sh"
+	returne
+}
 #########################################################
 ####FUNZIONI#############################################
 #########################################################
@@ -815,6 +821,7 @@ function inizio()
 	options[${#options[*]}]="Esegui programmi";
 	options[${#options[*]}]="Comandi utili";
 	options[${#options[*]}]="Controlla/Installa programmi supplementari";
+	options[${#options[*]}]="Rimuovi Libreria Comandi";
 	options[${#options[*]}]="Esci";
 	select opt in "${options[@]}"; do
 	case ${opt} in
@@ -824,7 +831,8 @@ function inizio()
 	${options[2]}) manutenzione;;
 	${options[3]}) run_external_program;;
 	${options[4]}) comandi_utili;;
-	${options[5]}) check_programm;;
+	${options[5]}) remove_lib;;
+	${options[6]}) check_programm;;
 	
 	(Esci) break; ;;
 	esac;
