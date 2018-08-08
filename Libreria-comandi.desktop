@@ -2,7 +2,7 @@
 Name=Libreria comandi
 Comment=Raccolta di script bash
 Icon=/usr/share/icons/gnome/32x32/apps/khelpcenter.png
-Exec='/usr/bin/Libreria_comandi.sh' 
+Exec='/usr/share/libreria_comandi/Libreria_comandi.sh' 
 Terminal=true
 Type=Application
 Categories=GNOME;GTK;System;
