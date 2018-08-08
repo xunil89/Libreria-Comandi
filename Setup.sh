@@ -21,6 +21,8 @@ sudo chmod +x  Libreria_comandi.sh
 sudo chmod +x Mirrorlist.sh
 sudo chmod +x Aurman_install.sh
 sudo chmod +x Update_lib.sh
+cd /home/$USER
+sudo chmod +x Libreria-comandi.desktop
 cd
 
 #cd /usr/share/libreria_comandi/ico
