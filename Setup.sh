@@ -18,11 +18,7 @@ sudo wget https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Aurm
 sudo wget https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Update_lib.sh
 sudo wget https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Libreria_comandi.sh
 sudo wget https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Remove_lib.sh
-sudo chmod +x  Libreria_comandi.sh
-sudo chmod +x Mirrorlist.sh
-sudo chmod +x Aurman_install.sh
-sudo chmod +x Update_lib.sh
-sudo chmod +x Remove_lib.sh
+sudo chmod +x /usr/share/libreria_comandi/*
 cd /home/$USER
 sudo chmod +x Libreria-comandi.desktop
 cd
