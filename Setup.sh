@@ -18,6 +18,8 @@ sudo wget https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Aurm
 sudo wget https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Update_lib.sh
 sudo wget https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Libreria_comandi.sh
 sudo wget https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Remove_lib.sh
+sudo wget https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Check_program.sh
+sudo wget https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Setup.sh
 sudo chmod +x /usr/share/libreria_comandi/*
 cd
 
@@ -32,6 +34,4 @@ cd /home/$USER
 wget https://raw.githubusercontent.com/xunil89/Libreria-Comandi/master/Libreria-comandi.desktop
 sudo chmod +x Libreria-comandi.desktop
 cd
-echo "DIRIGITI NELLA TUA HOME LI TROVERAI IL PROGRAMMA ;)"
-sleep 10
 exit
