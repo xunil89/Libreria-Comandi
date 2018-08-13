@@ -37,6 +37,96 @@ temp_dir="/home/$USER/.temp"
 log_dir="/var/log"
 bin_dir="/usr/bin"
 
+###CONTROLLO SINGOLARMENTE DEI PROGRAMMI INSTALLATI###
+
+function sudo_c()
+{
+	if which sudo &>/dev/null; then
+		sudo=1
+		prog=1
+		echo -e "Sudo..............................[$GREEN OK $Z]"
+	else
+		sudo=0
+		prog=0
+		echo -e "Sudo............................[$RED FAIL $Z]"
+	fi
+}
+
+function paccache_c()
+{
+	if which paccache &>/dev/null; then
+		paccache=1
+		prog=$(($prog+1))
+		echo -e "Paccache..........................[$GREEN OK $Z]"
+	else
+		paccache=0
+		echo -e "Paccache........................[$RED FAIL $Z]"
+	fi
+}
+
+function axel_c()
+{
+	if which axel &>/dev/null; then
+		axel=1
+		prog=$(($prog+1))
+		echo -e "Axel..............................[$GREEN OK $Z]"
+	else
+		paccache=0
+		echo -e "Axel..............................[$RED FAIL $Z]"
+	fi
+}
+
+function bleachbit_c()
+{
+	if which bleachbit &>/dev/null; then
+		prog=$(($prog+1))
+		bleachbit=1
+		echo -e "Bleachbit.........................[$GREEN OK $Z]"
+	else
+		bleachbit=0
+		echo -e "Bleachbit.......................[$RED FAIL $Z]"
+	fi
+}
+
+function aurman_c()
+{
+	if which aurman &>/dev/null; then
+		prog=$(($prog+1))
+		aurman=1
+		echo -e "Aurman............................[$GREEN OK $Z]"
+	else
+		aurman=0
+		echo -e "Aurman..........................[$RED FAIL $Z]"
+	fi
+}
+
+function wget_c()
+{
+	if which wget &>/dev/null; then
+		prog=$(($prog+1))
+		wget=1
+		echo -e "Wget............................[$GREEN OK $Z]"
+	else
+		wget=0
+		echo -e "Wget..........................[$RED FAIL $Z]"
+	fi
+}
+
+function md5sum_c()
+{
+	if which md5sum &>/dev/null; then
+		prog=$(($prog+1))
+		md5sum=1
+		echo -e "Md5sum............................[$GREEN OK $Z]"
+	else
+		md5sum=0
+		echo -e "Md5sum..........................[$RED FAIL $Z]"
+	fi
+}
+
+###CONTROLLO PROGRAMMI FINE###
+
+
 function cancel()
 {
 	clear
