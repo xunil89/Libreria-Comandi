@@ -12,7 +12,7 @@
 ####RICONOSCIMENTI#######################################
 #########################################################
 
-ver=0.7.0
+ver=0.7.1
 riconoscimenti="Libreria comandi By Mac89				          v$ver"
 
 #########################################################
@@ -51,51 +51,6 @@ function returne()
 	exit	
 }
 
-function check_prog_auto()
-{
-	if which sudo &>/dev/null; then
-		sudo=1
-		prog=1
-	else
-		sudo=0
-	fi
-
-	if which paccache &>/dev/null; then
-		paccache=1
-		prog=$(($prog+1))
-	else
-		paccache=0
-	fi
-
-	if which bleachbit &>/dev/null; then
-		prog=$(($prog+1))
-		bleachbit=1
-	else
-		bleachbit=0
-	fi
-	
-	if which axel &>/dev/null; then
-		prog=$(($prog+1))
-		axel=1
-	else
-		axel=0
-	fi
-
-	if which aurman &>/dev/null; then
-		prog=$(($prog+1))
-		aurman=1
-	else
-		aurman=0
-	fi
-	
-		if which wget &>/dev/null; then
-		prog=$(($prog+1))
-		wget=1
-	else
-		wget=0
-	fi
-}
-
 function Controlla_aggiornamenti()
 {
 	"$master_dir/Update_lib.sh"
@@ -111,82 +66,6 @@ function remove_lib()
 ####FUNZIONI#############################################
 #########################################################
 
-###CONTROLLO PROGRAMMI###
-
-function sudo_c()
-{
-	if which sudo &>/dev/null; then
-		sudo=1
-		prog=1
-		echo -e "Sudo..............................[$GREEN OK $Z]"
-	else
-		sudo=0
-		prog=0
-		echo -e "Sudo............................[$RED FAIL $Z]"
-	fi
-}
-
-function paccache_c()
-{
-	if which paccache &>/dev/null; then
-		paccache=1
-		prog=$(($prog+1))
-		echo -e "Paccache..........................[$GREEN OK $Z]"
-	else
-		paccache=0
-		echo -e "Paccache........................[$RED FAIL $Z]"
-	fi
-}
-
-function axel_c()
-{
-	if which axel &>/dev/null; then
-		axel=1
-		prog=$(($prog+1))
-		echo -e "Axel..............................[$GREEN OK $Z]"
-	else
-		paccache=0
-		echo -e "Axel..............................[$RED FAIL $Z]"
-	fi
-}
-
-function bleachbit_c()
-{
-	if which bleachbit &>/dev/null; then
-		prog=$(($prog+1))
-		bleachbit=1
-		echo -e "Bleachbit.........................[$GREEN OK $Z]"
-	else
-		bleachbit=0
-		echo -e "Bleachbit.......................[$RED FAIL $Z]"
-	fi
-}
-
-function aurman_c()
-{
-	if which aurman &>/dev/null; then
-		prog=$(($prog+1))
-		aurman=1
-		echo -e "Aurman............................[$GREEN OK $Z]"
-	else
-		aurman=0
-		echo -e "Aurman..........................[$RED FAIL $Z]"
-	fi
-}
-
-function wget_c()
-{
-	if which wget &>/dev/null; then
-		prog=$(($prog+1))
-		wget=1
-		echo -e "Wget............................[$GREEN OK $Z]"
-	else
-		wget=0
-		echo -e "Wget..........................[$RED FAIL $Z]"
-	fi
-}
-
-###CONTROLLO PROGRAMMI FINE###
 
 ###VELOCIZZARE PACMAN AXEL###
 
@@ -335,97 +214,6 @@ function backup_soft_sal()
 	cd
 }
 
-function install_aurman_script()
-{
-	cd 
-	"$master_dir/Aurman_install.sh"
-	returne
-}
-
-function install_program()
-{
-	total=$(($aurman+$bleachbit+$paccache+$sudo+$axel+$wget))
-	read -p "Vuoi installare tutti i programmi mancanti [S\n] " sel
-	if [[ $sel = @(s|S) ]]; then
-		if [[ $aurman == 0 ]]; then
-			echo "funzione non attiva"
-			#su -c'
-			#echo "" >> /etc/pacman.conf
-			#echo "#Aurman"  >> /etc/pacman.conf
-			#echo "[archlinuxfr]" >> /etc/pacman.conf
-			#echo "SigLevel = Optional TrustAll"  >> /etc/pacman.conf
-			#echo "Server = http://repo.archlinux.fr/\$arch" >> /etc/pacman.conf
-			#'
-			#sudo pacman -S Aurman
-		fi
-		if [[ $bleachbit == 0 ]]; then
-			sudo pacman -S bleachbit
-		fi
-		if [[ $paccache == 0 ]]; then
-			sudo pacman -S paccache
-		fi
-		if [[ $sudo == 0 ]]; then
-			sudo pacman -S sudo
-		fi
-		if [[ $axel == 0 ]]; then
-			sudo pacman -S axel
-		fi
-		if [[ $wget == 0 ]]; then
-			sudo pacman -S wget
-		fi
-		
-	elif [[ $sel = @(n|N) ]]; then
-		if [[ $aurman == 0 ]]; then
-			read -p "Vuoi installare Aurman [S\n] " sel
-			if [[ $sel = @(s|S) ]]; then
-				install_aurman
-			else
-				echo -e "$RED Aurman non verrà installato $Z"
-			fi
-		fi
-		if [[ $bleachbit == 0 ]]; then
-			read -p "Vuoi installare Bleachbit [S\n] " sel
-			if [[ $sel = @(s|S) ]]; then
-				sudo pacman -S bleachbit
-			else
-				echo -e "$RED Bleachbit non verrà installato $Z"
-			fi
-		fi
-		if [[ $paccache == 0 ]]; then
-			read -p "Vuoi installare Paccache [S\n] " sel
-			if [[ $sel = @(s|S) ]]; then
-				sudo pacman -S paccache
-			else
-				echo -e "$RED Paccache non verrà installato $Z"
-			fi
-		fi
-		if [[ $sudo == 0 ]]; then
-			read -p "Vuoi installare Sudo [S\n] " sel
-			if [[ $sel = @(s|S) ]]; then
-				sudo pacman -S sudo
-			else
-				echo -e "$RED Sudo non verrà installato $Z"
-			fi
-		fi
-		if [[ $axel == 0 ]]; then
-			read -p "Vuoi installare Axel [S\n] " sel
-			if [[ $sel = @(s|S) ]]; then
-				sudo pacman -S axel
-			else
-				echo -e "$RED Axel non verrà installato $Z"
-			fi
-		fi
-		if [[ $wget == 0 ]]; then
-			read -p "Vuoi installare Wget[S\n] " sel
-			if [[ $sel = @(s|S) ]]; then
-				sudo pacman -S wget
-			else
-				echo -e "$RED Wget non verrà installato $Z"
-			fi
-		fi
-	fi
-}
-
 function install_pacman()
 {
 	read -p "Vuoi prima cercare l'applicazione [N\s]" sel
@@ -435,7 +223,7 @@ function install_pacman()
 	elif [[ $sel = @(s|S) ]]; then
 		read -p "Digita il nome dell'applicazione da cercare " software
 		pacman -Ss $software
-		read -p "Digita il nome dell'applicazione da installare " software
+		read -p "Digita il nome dell'applicazione da installare oppure premi semplicemente invio" software
 		sudo pacman -S $software
 	else
 		install_pacman
@@ -719,51 +507,6 @@ function manutenzione()
 	done
 }
 
-function check_programm()
-{
-	cancel
-	echo "Controllo presenza programmi..."
-	echo ""
-	sudo_c
-	paccache_c
-	bleachbit_c
-	aurman_c
-	axel_c
-	if [ $prog == 6 ]; then
-		echo -e "$GREEN Tutti i programmi supplementari sono presenti $Z"
-		echo "Attenti..."
-		sleep 7
-		returne
-	elif [ $prog -ge 1 ]; then
-		echo "Alcuni programmi supplementari non sono presenti"
-		read -p "Vuoi installarli [S\n]" sel
-		if [[ $sel = @(n|N) ]]; then
-			echo "Alcune funzioni dello script saranno disabilitate"
-		elif [[ $sel = @(s|S) ]]; then
-			install_program
-		else
-			install_program
-		fi
-		sel=""
-		sleep 3
-		returne
-	else
-		echo -e "$RED Tutti i programmi supplementari non sono prensenti $Z"
-		read -p "Vuoi installarli [S\n]" sel
-		if [[ $sel = @(n|N) ]]; then
-			echo "Alcune funzioni dello script saranno disabilitate"
-		elif [[ $sel = @(s|S) ]]; then
-			install_program
-		else
-			install_program
-		fi
-		sel=""
-		sleep 3
-		returne
-	fi
-
-}
-
 function comandi_utili()
 {
 	cancel
@@ -830,7 +573,7 @@ function inizio()
 	${options[2]}) manutenzione;;
 	${options[3]}) run_external_program;;
 	${options[4]}) comandi_utili;;
-	${options[5]}) check_programm;;
+	${options[5]}) "$master_dir/Check_program.sh";;
 	${options[6]}) remove_lib;;
 	
 	(Esci) break; ;;
@@ -853,5 +596,5 @@ echo "
 #  By Mac89				          v$ver#
 #########################################################"
 
-check_prog_auto
 inizio
+
