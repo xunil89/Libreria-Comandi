@@ -8,6 +8,8 @@
 # Altrimenti puoi aprire un terminale, dirigerti nella cartella che contiene il file "cd ~/Scrivania"
 # e digitare "chmod +x nomefile"
 
+sudo rm -rf /usr/share/libreria_comandi ###Rimozione cartella principale per permettere aggiornamento
+
 sudo mkdir /usr/share/libreria_comandi
 sudo mkdir /usr/share/libreria_comandi/ico
 sudo mkdir /var/log/libreria_comandi
