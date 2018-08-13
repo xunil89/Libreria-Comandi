@@ -61,6 +61,15 @@ function Controlla_aggiornamenti()
 				echo -e "$GREEN Aggiornamento in corso... $Z"
 				Update_lib
 				md5=$( md5sum /usr/share/libreria_comandi/Libreria_comandi.sh | awk '{print $1}' )
+				#########################################
+				####correzione  errore temporaneo di setup
+				############################################
+				cd /home/$USER
+				mkdir .temp
+				cd /home/$USER/.temp
+				wget $link
+				cd
+				#######################################
 				md5_1=$( md5sum /home/$USER/.temp/Libreria_comandi.sh | awk '{print $1}' )
 				if [ $md5 == $md5_1 ]; then
 					echo -e "$GREEN Aggiornamento completato... $Z"
@@ -87,8 +96,8 @@ function Update_lib()
 {
 	cd
 	"$master_dir/Setup.sh"
+	sleep 3
 	cd
-	returne
 	#cd /home/$USER/.temp
 	#wget $link_zip
 	#unzip master.zip
