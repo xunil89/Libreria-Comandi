@@ -12,7 +12,7 @@
 ####RICONOSCIMENTI#######################################
 #########################################################
 
-ver=0.7.2
+ver=0.7.3
 riconoscimenti="Libreria comandi By Mac89				          v$ver"
 
 #########################################################
@@ -344,7 +344,7 @@ function agg_aurman()
 	aurman_c
 	if [ $aurman == 1 ]; then
 		echo "Aggiornamento S.O. con Aurman..."
-		sudo aurman -Syu
+		aurman -Syu
 		returne
 	else
 		echo -e "$BLUE Mi dispiace il software Aurman non è installato $Z"
