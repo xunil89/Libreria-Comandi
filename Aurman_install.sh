@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # IMPORTANTE
 # Se stai leggendo questo messaggio
 # e non hai aperto volontariamente il programma con un editor di testo
@@ -9,7 +7,8 @@
 # e digitare "chmod +x nomefile"
 
  ##SORGENTI##
-link_aurman="https://github.com/polygamma/aurman/archive/master.zip"
+link_aurman_git="https://github.com/polygamma/aurman/archive/master.zip"
+link_aurman="https://aur.archlinux.org/cgit/aur.git/snapshot/aurman.tar.gz"
 ############
 function install_program()
 {
@@ -81,7 +80,7 @@ function unzip_c()
 	fi
 }
 
-function install_aurman()
+function install_aurman_git()
 {
 	echo "Installazione Aurman da GitHub"
 	echo "Attenti..."
@@ -90,11 +89,12 @@ function install_aurman()
 	mkdir /home/$USER/.temp/libreria_comandi
 	mkdir /home/$USER/.temp/libreria_comandi/aurman
 	cd /home/$USER/.temp/libreria_comandi/aurman
-	wget $link_aurman
+	wget $link_aurman_git
 	unzip master.zip
-	cd /home/manuel/.temp/libreria_comandi/aurman/aurman-master
+	tar -xvzf foo.tar.gz
+	cd /home//$USER/.temp/libreria_comandi/aurman/aurman-master
 	makepkg -s
-	sudo pacman -U aurman-git*
+	sudo pacman -U aurman-git*.xz
 	cd
 	echo "Pulizia"
 	echo "Attenti..."
@@ -102,5 +102,45 @@ function install_aurman()
 	rm -rf /home/$USER/.temp/libreria_comandi
 }
 
+function install_aurman_aur()
+{
+	echo "Installazione Aurman da AUR"
+	echo "Attenti..."
+	sleep 2
+	mkdir /home/$USER/.temp/
+	mkdir /home/$USER/.temp/libreria_comandi
+	mkdir /home/$USER/.temp/libreria_comandi/aurman
+	cd /home/$USER/.temp/libreria_comandi/aurman
+	wget $link_aurman
+	tar -xvzf aurman.tar.gz
+	cd /home/$USER/.temp/libreria_comandi/aurman/aurman
+	makepkg -s
+	sudo pacman -U aurman*.xz
+	cd
+	echo "Pulizia"
+	echo "Attenti..."
+	sleep 2
+	rm -rf /home/$USER/.temp/libreria_comandi
+}
+
+function richiesta_install
+{
+	echo "Benvenuto nellinstalle di Aurman"
+	echo "Da quale sorgente preferisci scaricare Aurman?"
+	declare -a options
+	options[${#options[*]}]="Aurman Git";
+	options[${#options[*]}]="Aurman Aur";
+	options[${#options[*]}]="Esci";
+	select opt in "${options[@]}"; do
+	case ${opt} in
+	
+	${options[0]}) install_aurman_git;;
+	${options[1]}) install_aurman_aur;;
+	
+	(Esci) break; ;;
+	esac;
+	done
+}
+
 check_programm
-install_aurman
+richiesta_install
