@@ -231,7 +231,7 @@ function install_program()
 		if [[ $paccache == 0 ]]; then
 			read -p "Vuoi installare Paccache [S\n] " sel
 			if [[ $sel = @(s|S) ]]; then
-				sudo pacman -S paccache
+				aurman -S pacman-cleanup-hook
 			else
 				echo -e "$RED Paccache non verrà installato $Z"
 			fi
