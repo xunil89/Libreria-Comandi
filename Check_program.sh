@@ -274,7 +274,6 @@ function install_program()
 
 function check_programm() #Controlla i programmi installati ed eventualmente li installa
 {
-	cancel
 	echo "Controllo presenza programmi..."
 	echo ""
 	sudo_c
